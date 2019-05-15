@@ -1,7 +1,5 @@
 package com.example.assignment.utils;
 
-import android.util.Log;
-
 import com.example.assignment.model.Conversion;
 
 import java.util.Currency;
@@ -23,7 +21,7 @@ public class Utils {
     }
 
     public static Double getMappedPrice(List<Conversion> conversions,
-                                          String head, String convertTo) {
+                                        String head, String convertTo) {
 
         Set<String> verticesName = new HashSet<>();
         for (int i = 0; i < conversions.size(); i++) {
@@ -41,39 +39,21 @@ public class Utils {
                 counter++;
             }
         }
-
-        for (Map.Entry<String, Integer> entry : map.entrySet()) {
-            System.out.println("Key: " + entry.getKey() + " Value: " + entry.getValue());
-        }
-
         int V = verticesName.size(); // Number of vertices in graph
         int E = conversions.size(); // Number of edges in graph
-        System.out.println("V: " + V + " E: " + E);
         Utils graph = new Utils(V, E);
 
         //for (int i = 0; i < V; i++) {
         int i = 0;
-        for (int j = 0; j < E; j++) {
-            if (conversions.get(j).getFrom().equalsIgnoreCase(head)) {
-                graph.edge[0].src = map.get(conversions.get(j).getFrom());
-                graph.edge[0].dest = map.get(conversions.get(j).getTo());
-                graph.edge[0].weight = Double.parseDouble(conversions.get(j).getRate());
-
-                Log.d("", "src: " + graph.edge[0].src + " dest: " + graph.edge[0].dest + " weight: "
-                        + graph.edge[0].weight);
-            } else {
-                i++;
-                graph.edge[i].src = map.get(conversions.get(j).getFrom());
-                graph.edge[i].dest = map.get(conversions.get(j).getTo());
-                graph.edge[i].weight = Double.parseDouble(conversions.get(j).getRate());
-
-                Log.d("", "src: " + graph.edge[i].src + " dest: " + graph.edge[i].dest + " weight: "
-                        + graph.edge[i].weight);
-            }
+        for (Conversion conversion: conversions) {
+            graph.edge[i].src = map.get(conversion.getFrom());
+            graph.edge[i].dest = map.get(conversion.getTo());
+            graph.edge[i].weight = Double.parseDouble(conversion.getRate());
+            i++;
         }
         //}
         Double[] dist = graph.BellmanFord(graph);
-        if (dist[map.get(convertTo)] != null){
+        if (dist[map.get(convertTo)] != null) {
             return dist[map.get(convertTo)];
         } else {
             return 0.0;
