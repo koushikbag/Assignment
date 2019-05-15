@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
@@ -17,6 +16,7 @@ import com.bumptech.glide.request.target.Target;
 import com.example.assignment.R;
 import com.example.assignment.model.Conversion;
 import com.example.assignment.model.Products;
+import com.example.assignment.utils.GlideApp;
 import com.example.assignment.utils.Utils;
 
 import java.util.ArrayList;
@@ -49,7 +49,7 @@ public class ProductItemAdapter extends RecyclerView.Adapter<ProductItemAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Glide.with(mContext)
+        GlideApp.with(mContext)
                 .asBitmap()
                 .load(mItemList.get(position).getUrl())
                 .listener(new RequestListener<Bitmap>() {
@@ -78,7 +78,8 @@ public class ProductItemAdapter extends RecyclerView.Adapter<ProductItemAdapter.
             Log.d("values: ", " : " + doubles);
             if (!doubles.equals(0.0)) {
                 formattedValue = Utils.getCurrencySymbol(mCurrencySymbol) + " "
-                        + String.format("%.2f", Double.parseDouble(mItemList.get(position).getPrice())*doubles);            } else
+                        + String.format("%.2f", Double.parseDouble(mItemList.get(position).getPrice()) * doubles);
+            } else
                 formattedValue = Utils.getCurrencySymbol(mCurrencySymbol) + " "
                         + mItemList.get(position).getPrice();
         }
