@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Assignment</string>
+    <string name="inr">INR</string>
+    <string name="aed">AED</string>
+    <string name="sar">SAR</string>
+    <string name="_20_off">20% OFF</string>
+</resources>
